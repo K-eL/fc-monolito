@@ -9,6 +9,19 @@ import ClientAdmFacade from "./client-adm.facade";
 describe("ClientAdmFacade test", () => {
   let sequelize: Sequelize;
 
+  const input = {
+    id: "1",
+    name: "Client 1",
+    document: "123456789",
+    email: "x@x.com",
+    street: "Street 1",
+    number: "1",
+    complement: "Complement 1",
+    city: "City 1",
+    state: "State 1",
+    zipCode: "12345678"
+  };
+
   beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: "sqlite",
@@ -33,12 +46,7 @@ describe("ClientAdmFacade test", () => {
       findUsecase: undefined,
     });
 
-    const input = {
-      id: "1",
-      name: "Client 1",
-      email: "x@x.com",
-      address: "Address 1",
-    };
+    // const facade = ClientAdmFacadeFactory.create();
 
     await facade.add(input);
 
@@ -46,8 +54,14 @@ describe("ClientAdmFacade test", () => {
 
     expect(client).toBeDefined();
     expect(client.name).toBe(input.name);
+    expect(client.document).toBe(input.document);
     expect(client.email).toBe(input.email);
-    expect(client.address).toBe(input.address);
+    expect(client.street).toBe(input.street);
+    expect(client.number).toBe(input.number);
+    expect(client.complement).toBe(input.complement);
+    expect(client.city).toBe(input.city);
+    expect(client.state).toBe(input.state);
+    expect(client.zipCode).toBe(input.zipCode);
   });
 
   it("should find a client", async () => {
@@ -61,13 +75,6 @@ describe("ClientAdmFacade test", () => {
 
     const facade = ClientAdmFacadeFactory.create();
 
-    const input = {
-      id: "1",
-      name: "Client 1",
-      email: "x@x.com",
-      address: "Address 1",
-    };
-
     await facade.add(input);
 
     const client = await facade.find({ id: "1" });
@@ -76,6 +83,6 @@ describe("ClientAdmFacade test", () => {
     expect(client.id).toBe(input.id);
     expect(client.name).toBe(input.name);
     expect(client.email).toBe(input.email);
-    expect(client.address).toBe(input.address);
+    expect(client.document).toBe(input.document);
   });
 });
